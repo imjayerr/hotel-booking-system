@@ -1,18 +1,23 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 
 export default function LoginPage() {
+  const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // TODO: Implement login logic
+    // TODO: Implement login logic with backend
     console.log("Login:", { email, password });
+    
+    // Redirect to home page after successful login
+    router.push("/");
   };
 
   return (
@@ -98,27 +103,6 @@ export default function LoginPage() {
                 เข้าสู่ระบบ
               </button>
             </form>
-
-            {/* Divider */}
-            <div className="my-6 flex items-center">
-              <div className="flex-grow border-t border-gray-300 dark:border-gray-600"></div>
-              <span className="px-4 text-sm text-gray-500 dark:text-gray-400">
-                หรือ
-              </span>
-              <div className="flex-grow border-t border-gray-300 dark:border-gray-600"></div>
-            </div>
-
-            {/* Social Login */}
-            <div className="space-y-3">
-              <button className="w-full bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 py-3 rounded-lg font-semibold hover:bg-gray-50 dark:hover:bg-gray-600 transition-colors flex items-center justify-center space-x-2">
-                <span>🔵</span>
-                <span>เข้าสู่ระบบด้วย Google</span>
-              </button>
-              <button className="w-full bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 py-3 rounded-lg font-semibold hover:bg-gray-50 dark:hover:bg-gray-600 transition-colors flex items-center justify-center space-x-2">
-                <span>📘</span>
-                <span>เข้าสู่ระบบด้วย Facebook</span>
-              </button>
-            </div>
 
             {/* Sign up link */}
             <p className="mt-6 text-center text-sm text-gray-600 dark:text-gray-400">

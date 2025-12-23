@@ -426,7 +426,13 @@ export default function AdminDashboard() {
                         >
                           ✓ อนุมัติ
                         </button>
-                        <button className="flex-1 bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition-all">
+                        <button 
+                          onClick={() => {
+                            // TODO: Navigate to hotel details
+                            console.log(`View hotel details: ${hotel.id}`);
+                          }}
+                          className="flex-1 bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition-all"
+                        >
                           👁️ ดูรายละเอียด
                         </button>
                         <button
@@ -532,7 +538,13 @@ export default function AdminDashboard() {
                           </td>
                           <td className="py-4 px-4 text-center">
                             <div className="flex gap-2 justify-center">
-                              <button className="text-blue-600 hover:text-blue-700 font-semibold">
+                              <button 
+                                onClick={() => {
+                                  // TODO: Navigate to user details
+                                  console.log(`View user details: ${user.id}`);
+                                }}
+                                className="text-blue-600 hover:text-blue-700 font-semibold"
+                              >
                                 ดู
                               </button>
                               <button
@@ -612,10 +624,22 @@ export default function AdminDashboard() {
                         >
                           🗑️ ลบรีวิว
                         </button>
-                        <button className="flex-1 bg-green-600 text-white py-3 rounded-lg font-semibold hover:bg-green-700 transition-all">
+                        <button 
+                          onClick={() => {
+                            // TODO: Implement approve review
+                            console.log(`Approve review: ${review.id}`);
+                          }}
+                          className="flex-1 bg-green-600 text-white py-3 rounded-lg font-semibold hover:bg-green-700 transition-all"
+                        >
                           ✓ รีวิวถูกต้อง (ปฏิเสธการรายงาน)
                         </button>
-                        <button className="flex-1 bg-yellow-600 text-white py-3 rounded-lg font-semibold hover:bg-yellow-700 transition-all">
+                        <button 
+                          onClick={() => {
+                            // TODO: Implement send warning
+                            console.log(`Send warning for review: ${review.id}`);
+                          }}
+                          className="flex-1 bg-yellow-600 text-white py-3 rounded-lg font-semibold hover:bg-yellow-700 transition-all"
+                        >
                           ⚠️ ส่งคำเตือน
                         </button>
                       </div>

@@ -164,6 +164,7 @@ export default function HotelDetailPage() {
   const [checkIn, setCheckIn] = useState("");
   const [checkOut, setCheckOut] = useState("");
   const [guests, setGuests] = useState(2);
+  const [isFavorite, setIsFavorite] = useState(false);
 
   if (!hotel) {
     return (
@@ -265,9 +266,15 @@ export default function HotelDetailPage() {
                 </div>
               </div>
 
-              <button className="mt-4 md:mt-0 bg-white dark:bg-gray-700 border-2 border-red-500 text-red-500 px-6 py-3 rounded-lg hover:bg-red-50 dark:hover:bg-gray-600 transition-colors flex items-center space-x-2">
-                <span className="text-2xl">❤️</span>
-                <span className="font-semibold">บันทึก</span>
+              <button 
+                onClick={() => {
+                  setIsFavorite(!isFavorite);
+                  console.log(isFavorite ? "Removed from favorites" : "Added to favorites");
+                }}
+                className="mt-4 md:mt-0 bg-white dark:bg-gray-700 border-2 border-red-500 text-red-500 px-6 py-3 rounded-lg hover:bg-red-50 dark:hover:bg-gray-600 transition-colors flex items-center space-x-2"
+              >
+                <span className="text-2xl">{isFavorite ? "❤️" : "🤍"}</span>
+                <span className="font-semibold">{isFavorite ? "บันทึกแล้ว" : "บันทึก"}</span>
               </button>
             </div>
 

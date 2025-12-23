@@ -1,11 +1,13 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 
 export default function RegisterPage() {
+  const router = useRouter();
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -24,8 +26,19 @@ export default function RegisterPage() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // TODO: Implement registration logic
+    
+    // Validate password match
+    if (formData.password !== formData.confirmPassword) {
+      alert("รหัสผ่านไม่ตรงกัน!");
+      return;
+    }
+    
+    // TODO: Implement registration logic with backend
     console.log("Register:", formData);
+    
+    // Show success message and redirect to login
+    alert("สมัครสมาชิกสำเร็จ! กรุณาเข้าสู่ระบบ");
+    router.push("/login");
   };
 
   return (

@@ -270,11 +270,22 @@ export default function BookingsPage() {
                         </div>
 
                         <div className="flex gap-2">
-                          <button className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm font-semibold">
+                          <Link 
+                            href={`/booking-confirmation/${booking.bookingNumber}`}
+                            className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm font-semibold"
+                          >
                             ดูรายละเอียด
-                          </button>
+                          </Link>
                           {booking.status === "confirmed" && (
-                            <button className="px-4 py-2 bg-red-100 text-red-700 dark:bg-red-900 dark:text-red-200 rounded-lg hover:bg-red-200 dark:hover:bg-red-800 transition-colors text-sm font-semibold">
+                            <button 
+                              onClick={() => {
+                                if (confirm("คุณต้องการยกเลิกการจองนี้หรือไม่?")) {
+                                  console.log("Cancel booking:", booking.id);
+                                  // TODO: Call API to cancel booking
+                                }
+                              }}
+                              className="px-4 py-2 bg-red-100 text-red-700 dark:bg-red-900 dark:text-red-200 rounded-lg hover:bg-red-200 dark:hover:bg-red-800 transition-colors text-sm font-semibold"
+                            >
                               ยกเลิก
                             </button>
                           )}

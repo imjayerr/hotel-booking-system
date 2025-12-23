@@ -61,7 +61,13 @@ export default function ProfilePage() {
                       {formData.firstName.charAt(0)}
                     </span>
                   </div>
-                  <button className="text-sm text-blue-600 hover:text-blue-700">
+                  <button 
+                    onClick={() => {
+                      // TODO: Implement image upload
+                      console.log("Upload profile picture");
+                    }}
+                    className="text-sm text-blue-600 hover:text-blue-700"
+                  >
                     เปลี่ยนรูปโปรไฟล์
                   </button>
                 </div>
@@ -83,10 +89,25 @@ export default function ProfilePage() {
                   >
                     รายการโปรด
                   </Link>
-                  <button className="w-full text-left px-4 py-3 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700">
+                  <button 
+                    onClick={() => {
+                      // TODO: Implement change password
+                      console.log("Change password");
+                    }}
+                    className="w-full text-left px-4 py-3 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
+                  >
                     เปลี่ยนรหัสผ่าน
                   </button>
-                  <button className="w-full text-left px-4 py-3 rounded-lg text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20">
+                  <button 
+                    onClick={() => {
+                      if (confirm("คุณต้องการออกจากระบบหรือไม่?")) {
+                        // TODO: Implement logout
+                        console.log("Logout");
+                        window.location.href = "/login";
+                      }
+                    }}
+                    className="w-full text-left px-4 py-3 rounded-lg text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20"
+                  >
                     ออกจากระบบ
                   </button>
                 </nav>

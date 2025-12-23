@@ -1,4 +1,7 @@
+"use client";
+
 import Link from "next/link";
+import { useState } from "react";
 
 interface HotelCardProps {
   id: number;
@@ -23,6 +26,16 @@ export default function HotelCard({
   image,
   amenities,
 }: HotelCardProps) {
+  const [isFavorite, setIsFavorite] = useState(false);
+
+  const toggleFavorite = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsFavorite(!isFavorite);
+    // TODO: Call API to save favorite
+    console.log(isFavorite ? "Removed from favorites" : "Added to favorites");
+  };
+
   return (
     <Link href={`/hotels/${id}`}>
       <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-shadow duration-300 cursor-pointer group">
@@ -40,8 +53,11 @@ export default function HotelCard({
           </div>
 
           {/* Favorite Button */}
-          <button className="absolute top-4 left-4 bg-white dark:bg-gray-800 p-2 rounded-full shadow-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
-            <span className="text-xl">❤️</span>
+          <button 
+            onClick={toggleFavorite}
+            className="absolute top-4 left-4 bg-white dark:bg-gray-800 p-2 rounded-full shadow-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+          >
+            <span className="text-xl">{isFavorite ? "❤️" : "🤍"}</span>
           </button>
         </div>
 

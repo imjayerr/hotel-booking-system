@@ -569,7 +569,13 @@ export default function OwnerDashboard() {
                             ฿{booking.price.toLocaleString()}
                           </td>
                           <td className="py-4 px-4 text-center">
-                            <button className="text-blue-600 hover:text-blue-700 font-semibold">
+                            <button 
+                              onClick={() => {
+                                // TODO: Navigate to booking details
+                                console.log(`View booking details: ${booking.id}`);
+                              }}
+                              className="text-blue-600 hover:text-blue-700 font-semibold"
+                            >
                               ดูรายละเอียด
                             </button>
                           </td>

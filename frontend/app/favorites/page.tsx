@@ -47,9 +47,25 @@ const mockFavorites = [
 
 export default function FavoritesPage() {
   const [favorites, setFavorites] = useState(mockFavorites);
+  const [sortBy, setSortBy] = useState<'recent' | 'price' | 'rating'>('recent');
 
   const removeFavorite = (id: number) => {
     setFavorites(favorites.filter((fav) => fav.id !== id));
+  };
+
+  const handleSort = (type: 'recent' | 'price' | 'rating') => {
+    setSortBy(type);
+    const sorted = [...favorites].sort((a, b) => {
+      if (type === 'recent') {
+        return new Date(b.addedDate).getTime() - new Date(a.addedDate).getTime();
+      } else if (type === 'price') {
+        return a.pricePerNight - b.pricePerNight;
+      } else {
+        return b.rating - a.rating;
+      }
+    });
+    setFavorites(sorted);
+    console.log(`Sorted by ${type}`);
   };
 
   return (
@@ -89,18 +105,32 @@ export default function FavoritesPage() {
               {/* Sort and Filter */}
               <div className="flex justify-between items-center mb-6">
                 <div className="flex items-center space-x-4">
-                  <button className="text-sm text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400">
+                  <button 
+                    onClick={() => handleSort('recent')}
+                    className={`text-sm ${sortBy === 'recent' ? 'text-blue-600 dark:text-blue-400 font-semibold' : 'text-gray-600 dark:text-gray-400'} hover:text-blue-600 dark:hover:text-blue-400`}
+                  >
                     ล่าสุด
                   </button>
-                  <button className="text-sm text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400">
+                  <button 
+                    onClick={() => handleSort('price')}
+                    className={`text-sm ${sortBy === 'price' ? 'text-blue-600 dark:text-blue-400 font-semibold' : 'text-gray-600 dark:text-gray-400'} hover:text-blue-600 dark:hover:text-blue-400`}
+                  >
                     ราคาต่ำสุด
                   </button>
-                  <button className="text-sm text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400">
+                  <button 
+                    onClick={() => handleSort('rating')}
+                    className={`text-sm ${sortBy === 'rating' ? 'text-blue-600 dark:text-blue-400 font-semibold' : 'text-gray-600 dark:text-gray-400'} hover:text-blue-600 dark:hover:text-blue-400`}
+                  >
                     คะแนนสูงสุด
                   </button>
                 </div>
                 <button
-                  onClick={() => setFavorites([])}
+                  onClick={() => {
+                    if (confirm("คุณต้องการลบรายการโปรดทั้งหมดหรือไม่?")) {
+                      setFavorites([]);
+                      console.log("Cleared all favorites");
+                    }
+                  }}
                   className="text-sm text-red-600 hover:text-red-700"
                 >
                   ล้างทั้งหมด

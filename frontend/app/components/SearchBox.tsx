@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 interface SearchBoxProps {
   onSearch?: (data: SearchData) => void;
@@ -15,6 +16,7 @@ export interface SearchData {
 }
 
 export default function SearchBox({ onSearch }: SearchBoxProps) {
+  const router = useRouter();
   const [searchData, setSearchData] = useState<SearchData>({
     destination: "",
     checkIn: "",
@@ -23,10 +25,28 @@ export default function SearchBox({ onSearch }: SearchBoxProps) {
     rooms: 1,
   });
 
+  // Debug: Log when searchData changes
+  console.log("SearchBox state:", searchData);
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    
+    // Call onSearch callback if provided
     onSearch?.(searchData);
+    
     console.log("Search:", searchData);
+    
+    // Build query string
+    const params = new URLSearchParams({
+      destination: searchData.destination,
+      checkIn: searchData.checkIn,
+      checkOut: searchData.checkOut,
+      guests: searchData.guests.toString(),
+      rooms: searchData.rooms.toString(),
+    });
+    
+    // Navigate to hotels page with search params
+    router.push(`/hotels?${params.toString()}`);
   };
 
   return (
@@ -41,11 +61,12 @@ export default function SearchBox({ onSearch }: SearchBoxProps) {
             <input
               type="text"
               value={searchData.destination}
-              onChange={(e) =>
-                setSearchData({ ...searchData, destination: e.target.value })
-              }
+              onChange={(e) => {
+                console.log("Destination changed:", e.target.value);
+                setSearchData({ ...searchData, destination: e.target.value });
+              }}
               placeholder="กรุงเทพ, ภูเก็ต, เชียงใหม่..."
-              className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
 
@@ -57,10 +78,11 @@ export default function SearchBox({ onSearch }: SearchBoxProps) {
             <input
               type="date"
               value={searchData.checkIn}
-              onChange={(e) =>
-                setSearchData({ ...searchData, checkIn: e.target.value })
-              }
-              className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+              onChange={(e) => {
+                console.log("Check-in changed:", e.target.value);
+                setSearchData({ ...searchData, checkIn: e.target.value });
+              }}
+              className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
 
@@ -72,10 +94,11 @@ export default function SearchBox({ onSearch }: SearchBoxProps) {
             <input
               type="date"
               value={searchData.checkOut}
-              onChange={(e) =>
-                setSearchData({ ...searchData, checkOut: e.target.value })
-              }
-              className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+              onChange={(e) => {
+                console.log("Check-out changed:", e.target.value);
+                setSearchData({ ...searchData, checkOut: e.target.value });
+              }}
+              className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
 
@@ -88,28 +111,30 @@ export default function SearchBox({ onSearch }: SearchBoxProps) {
               <input
                 type="number"
                 value={searchData.guests}
-                onChange={(e) =>
+                onChange={(e) => {
+                  console.log("Guests changed:", e.target.value);
                   setSearchData({
                     ...searchData,
                     guests: parseInt(e.target.value) || 1,
-                  })
-                }
+                  });
+                }}
                 min="1"
                 placeholder="ผู้เข้าพัก"
-                className="w-full px-3 py-3 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-3 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
               <input
                 type="number"
                 value={searchData.rooms}
-                onChange={(e) =>
+                onChange={(e) => {
+                  console.log("Rooms changed:", e.target.value);
                   setSearchData({
                     ...searchData,
                     rooms: parseInt(e.target.value) || 1,
-                  })
-                }
+                  });
+                }}
                 min="1"
                 placeholder="ห้อง"
-                className="w-full px-3 py-3 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-3 py-3 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
             </div>
           </div>
