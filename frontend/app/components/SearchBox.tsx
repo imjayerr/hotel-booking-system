@@ -1,0 +1,128 @@
+"use client";
+
+import { useState } from "react";
+
+interface SearchBoxProps {
+  onSearch?: (data: SearchData) => void;
+}
+
+export interface SearchData {
+  destination: string;
+  checkIn: string;
+  checkOut: string;
+  guests: number;
+  rooms: number;
+}
+
+export default function SearchBox({ onSearch }: SearchBoxProps) {
+  const [searchData, setSearchData] = useState<SearchData>({
+    destination: "",
+    checkIn: "",
+    checkOut: "",
+    guests: 2,
+    rooms: 1,
+  });
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    onSearch?.(searchData);
+    console.log("Search:", searchData);
+  };
+
+  return (
+    <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl p-6">
+      <form onSubmit={handleSubmit} className="space-y-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
+          {/* Destination */}
+          <div className="lg:col-span-2">
+            <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
+              📍 ปลายทาง
+            </label>
+            <input
+              type="text"
+              value={searchData.destination}
+              onChange={(e) =>
+                setSearchData({ ...searchData, destination: e.target.value })
+              }
+              placeholder="กรุงเทพ, ภูเก็ต, เชียงใหม่..."
+              className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+          </div>
+
+          {/* Check-in Date */}
+          <div>
+            <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
+              📅 เช็คอิน
+            </label>
+            <input
+              type="date"
+              value={searchData.checkIn}
+              onChange={(e) =>
+                setSearchData({ ...searchData, checkIn: e.target.value })
+              }
+              className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+          </div>
+
+          {/* Check-out Date */}
+          <div>
+            <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
+              📅 เช็คเอาท์
+            </label>
+            <input
+              type="date"
+              value={searchData.checkOut}
+              onChange={(e) =>
+                setSearchData({ ...searchData, checkOut: e.target.value })
+              }
+              className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+          </div>
+
+          {/* Guests & Rooms */}
+          <div className="space-y-2">
+            <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300">
+              👥 ผู้เข้าพัก & ห้อง
+            </label>
+            <div className="grid grid-cols-2 gap-2">
+              <input
+                type="number"
+                value={searchData.guests}
+                onChange={(e) =>
+                  setSearchData({
+                    ...searchData,
+                    guests: parseInt(e.target.value) || 1,
+                  })
+                }
+                min="1"
+                placeholder="ผู้เข้าพัก"
+                className="w-full px-3 py-3 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
+              <input
+                type="number"
+                value={searchData.rooms}
+                onChange={(e) =>
+                  setSearchData({
+                    ...searchData,
+                    rooms: parseInt(e.target.value) || 1,
+                  })
+                }
+                min="1"
+                placeholder="ห้อง"
+                className="w-full px-3 py-3 rounded-lg border border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
+            </div>
+          </div>
+        </div>
+
+        {/* Search Button */}
+        <button
+          type="submit"
+          className="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white py-4 rounded-lg font-semibold text-lg hover:from-blue-700 hover:to-purple-700 transition-all shadow-lg"
+        >
+          🔍 ค้นหาโรงแรม
+        </button>
+      </form>
+    </div>
+  );
+}
